@@ -1,0 +1,37 @@
+:root {
+  --teal: #00c9b8;
+  --navy: #002393;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--navy);
+  color: #ffffff;
+  text-align: center;
+}
+
+.header {
+  background-color: var(--teal);
+  padding: 1rem;
+  color: var(--navy);
+}
+
+main {
+  padding: 2rem;
+}
+
+.primary-btn {
+  background-color: var(--teal);
+  color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  opacity: 0.9;
+}
+
