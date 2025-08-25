@@ -1,9 +1,70 @@
 import './App.css'
+import { FaHome, FaCreditCard, FaStar, FaEllipsisH } from 'react-icons/fa'
 
-// Home screen based on the provided fintech app mockups.
-// The layout emulates a mobile device by constraining the
-// width and fixing the bottom navigation bar while keeping
-// the main content scrollable.
+const sections = [
+  {
+    title: 'POPULAR',
+    items: [
+      { icon: '📱', label: 'bills & recharges' },
+      { icon: '💸', label: 'pay contacts' },
+      { icon: '🏠', label: 'house rent' },
+      { icon: '🚗', label: 'garage' }
+    ]
+  },
+  {
+    title: 'MONEY MATTERS',
+    items: [
+      { icon: '💰', label: 'cash' },
+      { icon: '🏦', label: 'bank balance' },
+      { icon: '💵', label: 'money' },
+      { icon: '📊', label: 'CIBIL score' },
+      { icon: '👛', label: 'Findi-Bankit wallet' }
+    ]
+  },
+  {
+    title: 'BILLS',
+    items: [
+      { icon: '💳', label: 'credit card' },
+      { icon: '📱', label: 'bills & recharges' },
+      { icon: '🏠', label: 'house rent' },
+      { icon: '🎓', label: 'education fees' },
+      { icon: '🚗', label: 'motor insurance' },
+      { icon: '🕑', label: 'payment history' }
+    ]
+  },
+  {
+    title: 'PAYMENTS',
+    items: [
+      { icon: '📷', label: 'scan & pay' },
+      { icon: '💸', label: 'pay contacts' }
+    ]
+  },
+  {
+    title: 'EXPLORE',
+    items: [
+      { icon: '🛍️', label: 'shop' },
+      { icon: '🚗', label: 'garage' },
+      { icon: '🎁', label: 'gift cards' },
+      { icon: '✈️', label: 'travel' }
+    ]
+  },
+  {
+    title: 'BENEFITS',
+    items: [
+      { icon: '🎉', label: 'refer' },
+      { icon: '🪙', label: 'coins' },
+      { icon: '🎟️', label: 'vouchers' }
+    ]
+  },
+  {
+    title: 'OTHERS',
+    items: [
+      { icon: '🆘', label: 'support' },
+      { icon: '🕒', label: 'payment history' },
+      { icon: '⚙️', label: 'settings' }
+    ]
+  }
+]
 
 function App() {
   return (
@@ -23,81 +84,42 @@ function App() {
           <div className="reward-card">Gift Cards</div>
         </div>
 
-        {/* Money Matters section */}
-        <section className="section">
-          <h3 className="section-title">MONEY MATTERS</h3>
-          <div className="money-items">
-            <div className="money-card">
-              <span>CRED cash</span>
-              <span className="amount">₹45,000</span>
+        {/* Services sections */}
+        {sections.map((section) => (
+          <section className="section" key={section.title}>
+            <h3 className="section-title">{section.title}</h3>
+            <div className="grid-icons">
+              {section.items.map((item) => (
+                <div className="icon-item" key={item.label}>
+                  <div className="icon-circle">{item.icon}</div>
+                  <span className="icon-label">{item.label}</span>
+                </div>
+              ))}
             </div>
-            <div className="money-card">
-              <span>INDB xx 8358</span>
-              <span className="amount">check</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Upcoming Bills section */}
-        <section className="section">
-          <h3 className="section-title">UPCOMING BILLS</h3>
-          <div className="bill-card">
-            <div className="bill-info">
-              <span className="bill-title">RBL Bank</span>
-              <span className="bill-detail">XXXX 2299</span>
-            </div>
-            <button className="pay-btn">Pay ₹17,001</button>
-          </div>
-        </section>
-
-        {/* Explore Section */}
-        <section className="section">
-          <h3 className="section-title">EXPLORE CRED</h3>
-          <div className="grid-icons">
-            <div className="icon-item">
-              <div className="icon-circle">📱</div>
-              <span className="icon-label">bills & recharges</span>
-            </div>
-            <div className="icon-item">
-              <div className="icon-circle">💸</div>
-              <span className="icon-label">pay contacts</span>
-            </div>
-            <div className="icon-item">
-              <div className="icon-circle">🛍️</div>
-              <span className="icon-label">shop</span>
-            </div>
-            <div className="icon-item">
-              <div className="icon-circle">📊</div>
-              <span className="icon-label">CIBIL score</span>
-            </div>
-            <div className="icon-item">
-              <div className="icon-circle">💰</div>
-              <span className="icon-label">cash</span>
-            </div>
-            <div className="icon-item">
-              <div className="icon-circle">🎓</div>
-              <span className="icon-label">education fees</span>
-            </div>
-          </div>
-        </section>
+          </section>
+        ))}
       </div>
 
       {/* Bottom navigation */}
       <nav className="bottom-nav">
         <a href="#" className="nav-item">
-          Home
+          <FaHome className="nav-icon" />
+          <span>Home</span>
         </a>
         <a href="#" className="nav-item">
-          Cards
+          <FaCreditCard className="nav-icon" />
+          <span>Cards</span>
         </a>
         <a href="#" className="nav-item">
-          UPI
+          <div className="upi-btn">UPI</div>
         </a>
         <a href="#" className="nav-item">
-          Rewards
+          <FaStar className="nav-icon" />
+          <span>Rewards</span>
         </a>
         <a href="#" className="nav-item">
-          More
+          <FaEllipsisH className="nav-icon" />
+          <span>More</span>
         </a>
       </nav>
     </div>

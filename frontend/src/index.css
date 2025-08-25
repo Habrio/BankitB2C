@@ -1,4 +1,6 @@
 :root {
+  --primary-color: #00c9b8;
+  --secondary-color: #002393;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
