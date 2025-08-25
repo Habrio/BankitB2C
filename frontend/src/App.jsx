@@ -1,14 +1,15 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   FaHome,
-  FaCreditCard,
   FaExchangeAlt,
   FaEllipsisH,
-  FaUserCircle
+  FaUserCircle,
+  FaWallet
 } from 'react-icons/fa'
 import UPIFlow from './UPIFlow'
 import ProfileDrawer from './ProfileDrawer'
+import Wallet from './Wallet'
 
 const sections = [
   {
@@ -78,9 +79,24 @@ const sections = [
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
   const [profileOpen, setProfileOpen] = useState(false)
+  const [upiDetails, setUpiDetails] = useState(() => {
+    const saved = localStorage.getItem('upiDetails')
+    return saved ? JSON.parse(saved) : null
+  })
+
+  useEffect(() => {
+    if (upiDetails) {
+      localStorage.setItem('upiDetails', JSON.stringify(upiDetails))
+    }
+  }, [upiDetails])
+
+  const handleRegister = details => {
+    setUpiDetails(details)
+  }
 
   return (
-    <div className="mobile-container">
+    <>
+      <div className="mobile-container">
       <header className="app-header">
         <h1 className="app-title">Bankit</h1>
         <button
@@ -115,7 +131,13 @@ function App() {
                 <h3 className="section-title">{section.title}</h3>
                 <div className="grid-icons">
                   {section.items.map((item) => (
-                    <div className="icon-item" key={item.label}>
+                    <div
+                      className="icon-item"
+                      key={item.label}
+                      onClick={() => {
+                        if (item.label === 'scan & pay') setCurrentPage('upi')
+                      }}
+                    >
                       <div className="icon-circle">{item.icon}</div>
                       <span className="icon-label">{item.label}</span>
                     </div>
@@ -126,7 +148,15 @@ function App() {
           </>
         )}
 
-        {currentPage === 'upi' && <UPIFlow onClose={() => setCurrentPage('home')} />}
+        {currentPage === 'upi' && (
+          <UPIFlow
+            onClose={() => setCurrentPage('home')}
+            registered={Boolean(upiDetails)}
+            onRegister={handleRegister}
+          />
+        )}
+
+        {currentPage === 'wallet' && <Wallet />}
       </div>
 
       {/* Bottom navigation */}
@@ -135,9 +165,9 @@ function App() {
           <FaHome className="nav-icon" />
           <span>Home</span>
         </a>
-        <a href="#" className="nav-item">
-          <FaCreditCard className="nav-icon" />
-          <span>Cards</span>
+        <a href="#" className="nav-item" onClick={() => setCurrentPage('wallet')}>
+          <FaWallet className="nav-icon" />
+          <span>Wallet</span>
         </a>
         <a
           href="#"
@@ -155,9 +185,14 @@ function App() {
           <span>More</span>
         </a>
       </nav>
-
-      {profileOpen && <ProfileDrawer onClose={() => setProfileOpen(false)} />}
     </div>
+    {profileOpen && (
+      <ProfileDrawer
+        onClose={() => setProfileOpen(false)}
+        upiDetails={upiDetails}
+      />
+    )}
+    </>
   )
 }
 

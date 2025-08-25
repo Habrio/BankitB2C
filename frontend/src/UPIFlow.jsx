@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
-function UPIFlow ({ onClose }) {
-  const [step, setStep] = useState(0)
+function UPIFlow ({ onClose, registered, onRegister }) {
+  const [step, setStep] = useState(registered ? 4 : 0)
   const [bank, setBank] = useState('')
   const [upiId, setUpiId] = useState('')
   const [pin, setPin] = useState('')
   const [payee, setPayee] = useState('')
   const [amount, setAmount] = useState('')
+  const [mode, setMode] = useState('upi')
 
   return (
     <div className="upi-flow">
@@ -55,6 +56,7 @@ function UPIFlow ({ onClose }) {
         <form
           onSubmit={e => {
             e.preventDefault()
+            onRegister({ bank, upiId })
             setStep(4)
           }}
         >
@@ -66,32 +68,48 @@ function UPIFlow ({ onClose }) {
             onChange={e => setPin(e.target.value)}
             required
           />
-          <button type="submit">Continue</button>
+          <button type="submit">Register</button>
         </form>
       )}
       {step === 4 && (
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            setStep(5)
-          }}
-        >
-          <h2>Make Payment</h2>
-          <input
-            placeholder="Payee UPI ID"
-            value={payee}
-            onChange={e => setPayee(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Amount"
-            value={amount}
-            onChange={e => setAmount(e.target.value)}
-            required
-          />
-          <button type="submit">Pay</button>
-        </form>
+        <div>
+          <h2>Scan & Pay</h2>
+          <div className="pay-mode">
+            <button
+              className={mode === 'upi' ? 'active' : ''}
+              onClick={() => setMode('upi')}
+            >
+              UPI ID
+            </button>
+            <button
+              className={mode === 'contact' ? 'active' : ''}
+              onClick={() => setMode('contact')}
+            >
+              Contacts
+            </button>
+          </div>
+          <form
+            onSubmit={e => {
+              e.preventDefault()
+              setStep(5)
+            }}
+          >
+            <input
+              placeholder={mode === 'upi' ? 'Payee UPI ID' : 'Contact name'}
+              value={payee}
+              onChange={e => setPayee(e.target.value)}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Amount"
+              value={amount}
+              onChange={e => setAmount(e.target.value)}
+              required
+            />
+            <button type="submit">Pay</button>
+          </form>
+        </div>
       )}
       {step === 5 && (
         <div>

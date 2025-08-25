@@ -120,6 +120,7 @@
   align-items: center;
   font-size: 0.75rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .icon-circle {
@@ -295,6 +296,38 @@
 }
 
 .upi-flow button {
+  padding: 10px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pay-mode {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pay-mode button {
+  flex: 1;
+  padding: 8px;
+  background: #eee;
+  border: none;
+  cursor: pointer;
+}
+
+.pay-mode .active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.wallet-screen {
+  padding: 16px;
+}
+
+.activate-btn {
   padding: 10px;
   background: var(--primary-color);
   color: #fff;
