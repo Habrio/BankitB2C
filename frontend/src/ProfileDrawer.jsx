@@ -1,4 +1,4 @@
-function ProfileDrawer ({ onClose }) {
+function ProfileDrawer ({ onClose, upiDetails }) {
   return (
     <div className="profile-overlay" onClick={onClose}>
       <div className="profile-drawer" onClick={e => e.stopPropagation()}>
@@ -9,6 +9,7 @@ function ProfileDrawer ({ onClose }) {
           <div className="avatar">A</div>
           <div>
             <h2>Ashish Dabas</h2>
+            {upiDetails && <p className="membership">UPI ID: {upiDetails.upiId}</p>}
             <p className="membership">member since Jul, 2022</p>
           </div>
         </div>
