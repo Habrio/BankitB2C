@@ -1,5 +1,14 @@
 import './App.css'
-import { FaHome, FaCreditCard, FaStar, FaEllipsisH } from 'react-icons/fa'
+import { useState } from 'react'
+import {
+  FaHome,
+  FaCreditCard,
+  FaExchangeAlt,
+  FaEllipsisH,
+  FaUserCircle
+} from 'react-icons/fa'
+import UPIFlow from './UPIFlow'
+import ProfileDrawer from './ProfileDrawer'
 
 const sections = [
   {
@@ -67,42 +76,62 @@ const sections = [
 ]
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('home')
+  const [profileOpen, setProfileOpen] = useState(false)
+
   return (
     <div className="mobile-container">
+      <header className="app-header">
+        <h1 className="app-title">Bankit</h1>
+        <button
+          className="profile-btn"
+          onClick={() => setProfileOpen(true)}
+          aria-label="profile"
+        >
+          <FaUserCircle size={28} />
+        </button>
+      </header>
+
       <div className="content">
-        {/* Greeting */}
-        <div className="greeting">
-          <p>
-            hello, <span className="username">Ashish</span>
-          </p>
-        </div>
-
-        {/* Rewards carousel */}
-        <div className="carousel">
-          <div className="reward-card">UNCLAIMED REWARDS</div>
-          <div className="reward-card">Daily Rewards</div>
-          <div className="reward-card">Gift Cards</div>
-        </div>
-
-        {/* Services sections */}
-        {sections.map((section) => (
-          <section className="section" key={section.title}>
-            <h3 className="section-title">{section.title}</h3>
-            <div className="grid-icons">
-              {section.items.map((item) => (
-                <div className="icon-item" key={item.label}>
-                  <div className="icon-circle">{item.icon}</div>
-                  <span className="icon-label">{item.label}</span>
-                </div>
-              ))}
+        {currentPage === 'home' && (
+          <>
+            {/* Greeting */}
+            <div className="greeting">
+              <p>
+                hello, <span className="username">Ashish</span>
+              </p>
             </div>
-          </section>
-        ))}
+
+            {/* Rewards carousel */}
+            <div className="carousel">
+              <div className="reward-card">UNCLAIMED REWARDS</div>
+              <div className="reward-card">Daily Rewards</div>
+              <div className="reward-card">Gift Cards</div>
+            </div>
+
+            {/* Services sections */}
+            {sections.map((section) => (
+              <section className="section" key={section.title}>
+                <h3 className="section-title">{section.title}</h3>
+                <div className="grid-icons">
+                  {section.items.map((item) => (
+                    <div className="icon-item" key={item.label}>
+                      <div className="icon-circle">{item.icon}</div>
+                      <span className="icon-label">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </>
+        )}
+
+        {currentPage === 'upi' && <UPIFlow onClose={() => setCurrentPage('home')} />}
       </div>
 
       {/* Bottom navigation */}
       <nav className="bottom-nav">
-        <a href="#" className="nav-item">
+        <a href="#" className="nav-item" onClick={() => setCurrentPage('home')}>
           <FaHome className="nav-icon" />
           <span>Home</span>
         </a>
@@ -110,18 +139,24 @@ function App() {
           <FaCreditCard className="nav-icon" />
           <span>Cards</span>
         </a>
-        <a href="#" className="nav-item">
+        <a
+          href="#"
+          className="nav-item"
+          onClick={() => setCurrentPage('upi')}
+        >
           <div className="upi-btn">UPI</div>
         </a>
         <a href="#" className="nav-item">
-          <FaStar className="nav-icon" />
-          <span>Rewards</span>
+          <FaExchangeAlt className="nav-icon" />
+          <span>Transactions</span>
         </a>
         <a href="#" className="nav-item">
           <FaEllipsisH className="nav-icon" />
           <span>More</span>
         </a>
       </nav>
+
+      {profileOpen && <ProfileDrawer onClose={() => setProfileOpen(false)} />}
     </div>
   )
 }
